@@ -10,7 +10,7 @@ export default class LineDisplay {
 			.x(d => (d.year - 1969.5) * 30)
 			.y(d => this.h / 1.44 - d.temp * 50)
 			// .curve(d3.curveNatural);
-			.curve(d3.curveLinear);
+			.curve(d3.curveCatmullRom);
 
 		this.buildLineChart();
 	}
@@ -72,12 +72,12 @@ export default class LineDisplay {
 					.attr("stroke-width", 2)
 					.attr("fill", "#fff")
 
-				let zero = svg.append("polyline")
-					.attr("points", `0,${this.h / 1.44} ${this.w},${this.h / 1.44}`)
-					.attr("stroke", "#383838")
-					.attr("stroke-width", "2")
-					.attr("stroke-linecap", "round")
-					.attr("stroke-dasharray", "5")
+				// let zero = svg.append("polyline")
+				// 	.attr("points", `0,${this.h / 1.44} ${this.w},${this.h / 1.44}`)
+				// 	.attr("stroke", "#383838")
+				// 	.attr("stroke-width", "2")
+				// 	.attr("stroke-linecap", "round")
+				// 	.attr("stroke-dasharray", "5")
 
 				let tmepLabels = svg.append("g")
 					.attr("id", "tempLabels");
@@ -97,24 +97,24 @@ export default class LineDisplay {
 					.attr("text-anchor", "start")
 					.attr("dy", "0.35em")
 
-				let yearLabels = svg.append("g")
-					.attr("id", "yearLabels");
+				// let yearLabels = svg.append("g")
+				// 	.attr("id", "yearLabels");
 
-				let years = yearLabels.selectAll("text")
-					.data(this.tempData)
-					.enter()
-					.append("text")
-					.text(d => d.year)
-					.attr("class", "year")
-					.attr("x", d => (d.year - 1970) * 30)
-					// .attr("x", 0)
-					.attr("y", this.h / 1.44 + 10)
-					.attr("font-size", "12px")
-					.attr("font-family", "sans-serif")
-					.attr("fill", "#666")
-					.attr("text-anchor", "start")
-					.attr("dy", "0.35em")
-					.attr("font-weight", "bold")
+				// let years = yearLabels.selectAll("text")
+				// 	.data(this.tempData)
+				// 	.enter()
+				// 	.append("text")
+				// 	.text(d => d.year)
+				// 	.attr("class", "year")
+				// 	.attr("x", d => (d.year - 1970) * 30)
+				// 	// .attr("x", 0)
+				// 	.attr("y", this.h / 1.44 + 10)
+				// 	.attr("font-size", "12px")
+				// 	.attr("font-family", "sans-serif")
+				// 	.attr("fill", "#666")
+				// 	.attr("text-anchor", "start")
+				// 	.attr("dy", "0.35em")
+				// 	.attr("font-weight", "bold")
 			});
 	}
 }

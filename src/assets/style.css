@@ -1,0 +1,35 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	text-align: center;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+svg {
+	margin: 0 auto;
+	overflow: visible;
+}
+
+#lineSpace {
+	border-left: 1px solid black;
+}
+
+path {
+	animation: drawLine 15s ease-in forwards;
+	stroke: linear-gradient(0deg, rgba(8,154,186,1) 0%, rgba(249,249,249,1) 35%, rgba(244,111,37,1) 100%);;
+}
+
+@keyframes drawLine {
+	0% {
+		stroke-dasharray: 10000;
+		stroke-dashoffset: 10000;
+	}
+	100% {
+		stroke-dasharray: 10000;
+		stroke-dashoffset: 0;
+	}
+}

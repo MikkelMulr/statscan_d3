@@ -11,7 +11,8 @@ module.exports = {
     entry: './src/index.js',
     plugins: [
         new CopyPlugin([
-            { from: 'src/assets/data.json', to: 'data.json' }
+            { from: 'src/assets/data.json', to: 'data.json' },
+            { from: 'src/assets/style.css', to: 'style.css' }
         ]),
         new HtmlWebpackPlugin({
             title: 'my pet',

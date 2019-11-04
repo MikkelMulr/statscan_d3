@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 
 export default class BarDisplay {
 	// ES6 class
-	constructor() {
+	constructor(dataset) {
 		// a function that gets called automatically
 		this.width = 1230;
 		this.height = 700;
@@ -14,6 +14,9 @@ export default class BarDisplay {
 		this.margin = { top: 0, right: 0, bottom: 0, left: 0 };
 		this.graphWidth = 1230 - this.margin.left - this.margin.right;
 		this.graphHeight = 700 - this.margin.top - this.margin.bottom;
+		this.dataset = dataset;
+		console.log(dataset);
+
 		this.buildChart();
 	}
 
@@ -35,64 +38,88 @@ export default class BarDisplay {
 			.attr('transform', `translate(0,${this.graphHeight})`);
 		const yAxisGroup = graph.append('g');
 
-		d3.json('data.json').then(data => {
-			const extent = d3.extent(data.data, d => d.precip);
+		// d3.json('data.json').then(data => {
+		// this.dataset.then(data => {
+		console.log(this.dataset);
+		const chartData = this.dataset;
+		const extent = d3.extent(chartData, d => d.precip);
 
-			//linear Scale
-			const y = d3
-				.scaleLinear()
-				.domain(extent)
-				// .range([this.graphHeight, 0]);
-				.range([this.graphHeight, 0]);
+		//linear Scale
+		const y = d3
+			.scaleLinear()
+			.domain(extent)
+			.range([this.graphHeight, 0]);
 
-			const x = d3
-				.scaleBand()
-				.domain(data.data.map(item => item.year))
-				.range([0, 1600])
-				.range([0, this.graphWidth])
-				.paddingInner(this.padding)
-				.paddingOuter(this.padding);
-			//join the data to rects
-			const rects = graph.selectAll('rect').data(data.data);
+		const x = d3
+			.scaleBand()
+			.domain(data.data.map(item => item.year))
+			.range([0, 1600])
+			.range([0, this.graphWidth])
+			.paddingInner(this.padding)
+			.paddingOuter(this.padding);
+		//join the data to rects
+		const rects = graph.selectAll('rect').data(chartData);
 
-			//update any existing
-			rects
-				.attr('width', x.bandwidth)
-				// .attr('height', d => graphHeight - y(d.precip))
-				.attr('height', d => Math.abs(y(0) - y(d.precip)))
-				.attr('fill', 'orange')
-				.attr('x', d => x(d.year))
-				// .attr('y', d => y(d.precip));
-				.attr('y', d => (d.precip >= 0 ? y(d.precip) : y(0)));
+		const defs = svg.append('defs');
 
-			//append the enter selection to the DOM
-			rects
-				.enter()
-				.append('rect')
-				.attr('width', x.bandwidth)
-				// .attr('height', d => graphHeight - y(d.precip))
-				.attr('height', d => Math.abs(y(0) - y(d.precip)))
-				.attr('fill', 'orange')
-				.attr('x', d => x(d.year))
-				// .attr('y', d => y(d.precip));
-				.attr('y', d => (d.precip >= 0 ? y(d.precip) : y(0)));
+		const gradient = defs
+			.append('linearGradient')
+			.attr('id', 'gradientBar')
+			.attr('gradientUnits', 'userSpaceOnUse')
+			.attr('x1', '0%')
+			.attr('y1', '100%')
+			.attr('x2', '0%')
+			.attr('y2', '0%');
 
-			//create and call the axes
-			const xAxis = d3.axisBottom(x);
-			const yAxis = d3
+		const stop1 = gradient
+			.append('stop')
+			.attr('offset', '0%')
+			.attr('stop-color', '#f00');
 
-				.axisLeft(y)
-				.ticks(20)
-				.tickFormat(d => d + ' precip');
+		// const stop2 = gradient
+		// 	.append('stop')
+		// 	.attr('offset', '35%')
+		// 	// .attr('stop-color', '#86A8E7');
+		// 	.attr('stop-color', '#D16BA5');
 
-			xAxisGroup.call(xAxis);
-			yAxisGroup.call(yAxis);
+		const stop3 = gradient
+			.append('stop')
+			.attr('offset', '100%')
 
-			xAxisGroup
-				.selectAll('text')
-				.attr('transform', 'rotate(-40)')
-				.attr('text-anchor', 'end')
-				.attr('fill', 'orange');
-		});
+			.attr('stop-color', '#0f0');
+
+		//append the enter selection to the DOM
+		rects
+			.enter()
+			.append('rect')
+			.attr('width', x.bandwidth)
+			// .attr('height', d => graphHeight - y(d.precip))
+			.attr('height', d => Math.abs(y(0) - y(d.precip)))
+			// .attr('fill', 'orange')
+			.attr('fill', 'url(#gradientBar)')
+			.attr('stroke-width', 2)
+			// .attr('stroke', 'black')
+			.attr('x', d => x(d.year))
+			// .attr('y', d => y(d.precip));
+			.attr('y', d => (d.precip >= 0 ? y(d.precip) : y(0)));
+
+		//create and call the axes
+		const xAxis = d3.axisBottom(x);
+		const yAxis = d3
+
+			.axisLeft(y)
+			.ticks(20)
+			.tickFormat(d => d + ' precip');
+		// .attr('fill', 'white');
+
+		xAxisGroup.call(xAxis);
+		yAxisGroup.call(yAxis);
+
+		xAxisGroup
+			.selectAll('text')
+			.attr('transform', 'rotate(-40)')
+			.attr('text-anchor', 'end')
+			.attr('fill', 'orange');
+		// });
 	}
 }

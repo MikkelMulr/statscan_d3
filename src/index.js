@@ -1,13 +1,12 @@
 import BarDisplay from './BarDisplay';
 import LineDisplay from './LineDisplay';
 
-let myBars = new BarDisplay(dataset);
-let myLine = new LineDisplay(dataset);
+let dataset = [];
 
-const dataset = fetch('./data.json')
+fetch('./data.json')
 	.then(data => data.json())
 	.then(data => {
-		return data.data;
+		dataset = data.data;
+		let myBars = new BarDisplay(dataset);
+		let myLine = new LineDisplay(dataset);
 	});
-
-console.log(dataset);

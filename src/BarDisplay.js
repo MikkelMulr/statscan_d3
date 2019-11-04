@@ -52,7 +52,7 @@ export default class BarDisplay {
 
 		const x = d3
 			.scaleBand()
-			.domain(data.data.map(item => item.year))
+			.domain(chartData.map(item => item.year))
 			.range([0, 1600])
 			.range([0, this.graphWidth])
 			.paddingInner(this.padding)

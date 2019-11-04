@@ -60,22 +60,8 @@ export default class LineDisplay {
 					.attr('stroke-width', 10)
 					.attr('fill', 'none')
 					// .attr("fill", "url(#gradient)")
-					.attr("stroke-linecap", "round")
-					.attr("stroke-linejoin", "round")
-
-				let points = svg.append("g")
-					.attr("id", "linePoints");
-
-				let point = points.selectAll("circle")
-					.data(this.tempData)
-					.enter()
-					.append("circle")
-					.attr("cx", d => (d.year - 1969.5) * 30)
-					.attr("cy", d => this.h / 1.44 - d.temp * 50)
-					.attr("r", "6")
-					.attr("stroke", "#383838")
-					.attr("stroke-width", 2)
-					.attr("fill", "#fff")
+					.attr('stroke-linecap', 'round')
+					.attr('stroke-linejoin', 'round');
 
 				// let zero = svg.append("polyline")
 				// 	.attr("points", `0,${this.h / 1.44} ${this.w},${this.h / 1.44}`)
@@ -84,23 +70,23 @@ export default class LineDisplay {
 				// 	.attr("stroke-linecap", "round")
 				// 	.attr("stroke-dasharray", "5")
 
-				let tmepLabels = svg.append("g")
-					.attr("id", "tempLabels");
+				let tmepLabels = svg.append('g').attr('id', 'tempLabels');
 
-				let labels = tmepLabels.selectAll("text")
+				let labels = tmepLabels
+					.selectAll('text')
 					.data(this.tempData)
 					.enter()
-					.append("text")
+					.append('text')
 					.text(d => d.temp)
-					.attr("class", "temp")
-					.attr("x", d => ((d.year - 1970) * 30) + 10)
+					.attr('class', 'temp')
+					.attr('x', d => (d.year - 1970) * 30 + 10)
 					// .attr("x", 0)
-					.attr("y", d => this.h / 1.44 - d.temp * 60)
-					.attr("font-size", "12px")
-					.attr("font-family", "sans-serif")
-					.attr("fill", "#666")
-					.attr("text-anchor", "start")
-					.attr("dy", "0.35em")
+					.attr('y', d => this.h / 1.44 - d.temp * 60)
+					.attr('font-size', '12px')
+					.attr('font-family', 'sans-serif')
+					.attr('fill', '#666')
+					.attr('text-anchor', 'start')
+					.attr('dy', '0.35em');
 
 				// let yearLabels = svg.append("g")
 				// 	.attr("id", "yearLabels");

@@ -6,13 +6,14 @@ export default class BarDisplay {
 	// ES6 class
 	constructor() {
 		// a function that gets called automatically
-		this.width = 1200;
-		this.height = 900;
+		this.width = 1230;
+		this.height = 700;
 		this.padding = 0.2;
 		//create margins and dimensions
-		this.margin = { top: 20, right: 20, bottom: 100, left: 100 };
-		this.graphWidth = 1200 - this.margin.left - this.margin.right;
-		this.graphHeight = 900 - this.margin.top - this.margin.bottom;
+		// this.margin = { top: 20, right: 20, bottom: 100, left: 100 };
+		this.margin = { top: 0, right: 0, bottom: 0, left: 0 };
+		this.graphWidth = 1230 - this.margin.left - this.margin.right;
+		this.graphHeight = 700 - this.margin.top - this.margin.bottom;
 		this.buildChart();
 	}
 
@@ -41,6 +42,7 @@ export default class BarDisplay {
 			const y = d3
 				.scaleLinear()
 				.domain(extent)
+				// .range([this.graphHeight, 0]);
 				.range([this.graphHeight, 0]);
 
 			const x = d3

@@ -12,24 +12,35 @@ body {
 svg {
 	margin: 0 auto;
 	overflow: visible;
+	/* border: 1px solid black; */
+	position: absolute;
+	left: 125px;
+	top: 50px;
 }
 
 #lineSpace {
-	border-left: 1px solid black;
+	border-right: 1px solid black;
 }
 
 path {
-	animation: drawLine 15s ease-in forwards;
-	stroke: linear-gradient(0deg, rgba(8,154,186,1) 0%, rgba(249,249,249,1) 35%, rgba(244,111,37,1) 100%);;
+	animation: drawLine 15s ease-in forwards 0s;
+	stroke-dasharray: 10000;
+	stroke-dashoffset: 10000;
 }
 
 @keyframes drawLine {
-	0% {
-		stroke-dasharray: 10000;
-		stroke-dashoffset: 10000;
-	}
-	100% {
+	to {
 		stroke-dasharray: 10000;
 		stroke-dashoffset: 0;
+	}
+}
+
+rect {
+	/* animation: drawRect 5s ease-in forwards; */
+}
+
+@keyframes drawRect {
+	from {
+		height: 0;
 	}
 }

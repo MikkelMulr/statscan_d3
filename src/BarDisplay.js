@@ -21,10 +21,7 @@ export default class BarDisplay {
 	}
 
 	buildChart() {
-		const svg = d3
-			.select('#barSpace')
-			.attr('width', this.width)
-			.attr('height', this.height);
+		const svg = d3.select('#barSpace').attr('width', this.width).attr('height', this.height);
 
 		//grouping
 		const graph = svg
@@ -33,28 +30,26 @@ export default class BarDisplay {
 			.attr('height', this.graphHeight)
 			.attr('transform', `translate(${this.margin.left},${this.margin.top})`);
 
-		const xAxisGroup = graph
-			.append('g')
-			.attr('transform', `translate(0,${this.graphHeight})`);
+		const xAxisGroup = graph.append('g').attr('transform', `translate(0,${this.graphHeight})`);
 		const yAxisGroup = graph.append('g');
+		const yAxisGroup2 = graph.append('g').attr('transform', `translate(${this.graphWidth}, 0)`);
 
 		// d3.json('data.json').then(data => {
 		// this.dataset.then(data => {
 		console.log(this.dataset);
 		const chartData = this.dataset;
-		const extent = d3.extent(chartData, d => d.precip);
+		const extent = d3.extent(chartData, (d) => d.precip);
+		const temps = d3.extent(chartData, (d) => d.temp);
 
 		//linear Scale
-		const y = d3
-			.scaleLinear()
-			.domain(extent)
-			.range([this.graphHeight, 0]);
+		const y = d3.scaleLinear().domain(extent).range([ this.graphHeight, 0 ]);
+		const y2 = d3.scaleLinear().domain(temps).range([ this.graphHeight, 0 ]);
 
 		const x = d3
 			.scaleBand()
-			.domain(chartData.map(item => item.year))
-			.range([0, 1600])
-			.range([0, this.graphWidth])
+			.domain(chartData.map((item) => item.year))
+			.range([ 0, 1600 ])
+			.range([ 0, this.graphWidth ])
 			.paddingInner(this.padding)
 			.paddingOuter(this.padding);
 		//join the data to rects
@@ -71,55 +66,28 @@ export default class BarDisplay {
 			.attr('x2', '0%')
 			.attr('y2', '0%');
 
-		const stop1 = gradient
-			.append('stop')
-			.attr('offset', '0%')
-			.attr('stop-color', '#f00');
-
-		// const stop2 = gradient
-		// 	.append('stop')
-		// 	.attr('offset', '35%')
-		// 	// .attr('stop-color', '#86A8E7');
-		// 	.attr('stop-color', '#D16BA5');
-
-		const stop3 = gradient
-			.append('stop')
-			.attr('offset', '100%')
-
-			.attr('stop-color', '#0f0');
+		const stop1 = gradient.append('stop').attr('offset', '100%').attr('stop-color', 'rgb(59, 214, 155)');
 
 		//append the enter selection to the DOM
 		rects
 			.enter()
 			.append('rect')
 			.attr('width', x.bandwidth)
-			// .attr('height', d => graphHeight - y(d.precip))
-			.attr('height', d => Math.abs(y(0) - y(d.precip)))
-			// .attr('fill', 'orange')
+			.attr('height', (d) => Math.abs(y(0) - y(d.precip)))
 			.attr('fill', 'url(#gradientBar)')
 			.attr('stroke-width', 2)
-			// .attr('stroke', 'black')
-			.attr('x', d => x(d.year))
-			// .attr('y', d => y(d.precip));
-			.attr('y', d => (d.precip >= 0 ? y(d.precip) : y(0)));
+			.attr('x', (d) => x(d.year))
+			.attr('y', (d) => (d.precip >= 0 ? y(d.precip) : y(0)));
 
 		//create and call the axes
 		const xAxis = d3.axisBottom(x);
-		const yAxis = d3
-
-			.axisLeft(y)
-			.ticks(20)
-			.tickFormat(d => d + ' precip');
-		// .attr('fill', 'white');
+		const yAxis = d3.axisLeft(y).ticks(20).tickFormat((d) => d + ' precip');
+		const yAxis2 = d3.axisRight(y2).ticks(20).tickFormat((d) => d + ' degrees');
 
 		xAxisGroup.call(xAxis);
 		yAxisGroup.call(yAxis);
+		yAxisGroup2.call(yAxis2);
 
-		xAxisGroup
-			.selectAll('text')
-			.attr('transform', 'rotate(-40)')
-			.attr('text-anchor', 'end')
-			.attr('fill', 'orange');
-		// });
+		xAxisGroup.selectAll('text').attr('transform', 'rotate(-40)').attr('text-anchor', 'end').attr('fill', '#fff');
 	}
 }

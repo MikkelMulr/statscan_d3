@@ -128,7 +128,7 @@ export default class LineDisplay {
 
 		// drawing and styling the path for the line graph
 		// the lineFun is used to calculate the points for the path to be drawn
-		let viz = graph
+		let tempGraph = graph
 			.append('path')
 			.attr('id', 'tempLine')
 			.attr('d', lineFun(this.tempData))

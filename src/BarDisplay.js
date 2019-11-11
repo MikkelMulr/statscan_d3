@@ -1,6 +1,7 @@
 // JavaScript Document
 
 import * as d3 from 'd3';
+// import * as legend from 'd3-svg-legend';
 
 export default class BarDisplay {
 	// ES6 class
@@ -37,6 +38,18 @@ export default class BarDisplay {
 			.append('g')
 			.attr('transform', `translate(0,${this.graphHeight})`);
 		const yAxisGroup = graph.append('g');
+
+		//legend setup
+		// const legendGroup = svg.append('g');
+		// // .attr('transform', 'translate(50,50)');
+		// // .attr('transform', `translate(${this.graphWidth + 10}, 10)`);
+
+		// const legend1 = d3.legend
+		// 	.legendColor()
+		// 	.shape('rect')
+		// 	.scale('name');
+
+		// legendGroup.call(legend1);
 
 		// d3.json('data.json').then(data => {
 		// this.dataset.then(data => {

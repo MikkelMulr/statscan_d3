@@ -5,7 +5,6 @@
  * The data is specific to the canadian artctic tundra from the years 1970 - 2010.
  */
 
-
 // importing classes for graph and the legend
 import BarDisplay from './BarDisplay';
 import LineDisplay from './LineDisplay';
@@ -21,7 +20,9 @@ fetch('./data.json')
 	.then(data => data.json())
 	.then(data => {
 		// assigning the data to dataset array
-		dataset = data.data;
+		dataset = data.climateData.regions[1].seasons[0].seasonData;
+
+		console.log(dataset);
 
 		// creating new instance of bar chart with the specified height, width and imported data
 		let myBars = new BarDisplay(height, width, dataset);
@@ -31,4 +32,4 @@ fetch('./data.json')
 	});
 
 // creating a new instance of legend
-let mylegend = new Legend();
+let myLegend = new Legend();

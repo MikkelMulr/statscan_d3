@@ -27,15 +27,15 @@ svg {
 	top: 120px;
 }
 
+#tempLine {
+	stroke-dasharray: 10000;
+	stroke-dashoffset: 10000;
+	animation: 15s drawLine ease-in-out forwards;
+}
+
 @keyframes drawLine {
 	to {
 		stroke-dasharray: 10000;
 		stroke-dashoffset: 0;
-	}
-}
-
-@keyframes drawRect {
-	from {
-		height: 0;
 	}
 }

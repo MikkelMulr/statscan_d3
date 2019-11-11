@@ -17,12 +17,14 @@ let width = 1200;
 let height = 600;
 
 // fetching the data from data.json file and parsing it through data.json()
-fetch('./data.json')
+fetch('./new-data.json')
 	.then(data => data.json())
 	.then(data => {
 		// assigning the data to dataset array
-		dataset = data.data;
+		dataset = data.climateData.regions[0].seasons[0].seasonData;
 
+		console.log(dataset);
+		
 		// creating new instance of bar chart with the specified height, width and imported data
 		let myBars = new BarDisplay(height, width, dataset);
 

@@ -20,7 +20,6 @@ export default class BarDisplay {
 		this.graphWidth = this.w - this.margin.left - this.margin.right;
 		this.graphHeight = this.h - this.margin.top - this.margin.bottom;
 		this.dataset = dataset;
-		console.log(dataset);
 
 		// Calling the primary function to build the chart
 		this.buildChart();
@@ -49,6 +48,8 @@ export default class BarDisplay {
 		const yAxisGroup = graph.append('g');
 
 		const chartData = this.dataset;
+		console.log(chartData);
+		
 		const extent = d3.extent(chartData, d => d.precip);
 
 		//linear Scale

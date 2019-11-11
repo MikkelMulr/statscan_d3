@@ -1,7 +1,6 @@
 // JavaScript Document
 
 import * as d3 from 'd3';
-// import * as legend from 'd3-svg-legend';
 
 export default class BarDisplay {
 	// ES6 class
@@ -11,7 +10,6 @@ export default class BarDisplay {
 		this.height = 700;
 		this.padding = 0.2;
 		//create margins and dimensions
-		// this.margin = { top: 20, right: 20, bottom: 100, left: 100 };
 		this.margin = { top: 0, right: 0, bottom: 0, left: 0 };
 		this.graphWidth = 1230 - this.margin.left - this.margin.right;
 		this.graphHeight = 700 - this.margin.top - this.margin.bottom;
@@ -39,18 +37,6 @@ export default class BarDisplay {
 			.attr('transform', `translate(0,${this.graphHeight})`);
 		const yAxisGroup = graph.append('g');
 
-		//legend setup
-		// const legendGroup = svg.append('g');
-		// // .attr('transform', 'translate(50,50)');
-		// // .attr('transform', `translate(${this.graphWidth + 10}, 10)`);
-
-		// const legend1 = d3.legend
-		// 	.legendColor()
-		// 	.shape('rect')
-		// 	.scale('name');
-
-		// legendGroup.call(legend1);
-
 		// d3.json('data.json').then(data => {
 		// this.dataset.then(data => {
 		console.log(this.dataset);
@@ -70,6 +56,7 @@ export default class BarDisplay {
 			.range([0, this.graphWidth])
 			.paddingInner(this.padding)
 			.paddingOuter(this.padding);
+
 		//join the data to rects
 		const rects = graph.selectAll('rect').data(chartData);
 
@@ -89,12 +76,6 @@ export default class BarDisplay {
 			.attr('offset', '0%')
 			.attr('stop-color', '#f00');
 
-		// const stop2 = gradient
-		// 	.append('stop')
-		// 	.attr('offset', '35%')
-		// 	// .attr('stop-color', '#86A8E7');
-		// 	.attr('stop-color', '#D16BA5');
-
 		const stop3 = gradient
 			.append('stop')
 			.attr('offset', '100%')
@@ -106,14 +87,10 @@ export default class BarDisplay {
 			.enter()
 			.append('rect')
 			.attr('width', x.bandwidth)
-			// .attr('height', d => graphHeight - y(d.precip))
 			.attr('height', d => Math.abs(y(0) - y(d.precip)))
-			// .attr('fill', 'orange')
 			.attr('fill', 'url(#gradientBar)')
 			.attr('stroke-width', 2)
-			// .attr('stroke', 'black')
 			.attr('x', d => x(d.year))
-			// .attr('y', d => y(d.precip));
 			.attr('y', d => (d.precip >= 0 ? y(d.precip) : y(0)));
 
 		//create and call the axes
@@ -123,7 +100,6 @@ export default class BarDisplay {
 			.axisLeft(y)
 			.ticks(20)
 			.tickFormat(d => d + ' precip');
-		// .attr('fill', 'white');
 
 		xAxisGroup.call(xAxis);
 		yAxisGroup.call(yAxis);
@@ -133,6 +109,5 @@ export default class BarDisplay {
 			.attr('transform', 'rotate(-40)')
 			.attr('text-anchor', 'end')
 			.attr('fill', 'orange');
-		// });
 	}
 }

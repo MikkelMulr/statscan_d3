@@ -5,10 +5,10 @@ export default class Legend {
 		this.width = 200;
 		this.height = 200;
 		this.legendTextColor = 'White';
-		this.tempTextColor = 'green';
-		this.precipTextColor = 'blue';
 		this.tempTextColor = 'yellow';
 		this.precipTextColor = 'orange';
+		this.tempRectColor = 'yellow';
+		this.precipRectColor = 'orange';
 		this.buildLegend();
 	}
 	buildLegend() {
@@ -27,7 +27,7 @@ export default class Legend {
 			.append('rect')
 			.attr('width', 10)
 			.attr('height', 10)
-			.attr('fill', this.tempTextColor)
+			.attr('fill', this.tempRectColor)
 			.attr('x', 30)
 			.attr('y', 40);
 
@@ -41,7 +41,7 @@ export default class Legend {
 			.append('rect')
 			.attr('width', 10)
 			.attr('height', 10)
-			.attr('fill', this.precipTextColor)
+			.attr('fill', this.precipRectColor)
 			.attr('x', 30)
 			.attr('y', 60);
 

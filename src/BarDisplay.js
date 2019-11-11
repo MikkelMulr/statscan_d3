@@ -8,6 +8,7 @@ export default class BarDisplay {
 		this.w = width;
 		this.h = height;
 		this.padding = 0.2;
+		this.fontSize = '16px';
 		//create margins and dimensions
 		this.margin = {
 			top: 0,
@@ -93,8 +94,8 @@ export default class BarDisplay {
 			.selectAll('text')
 			.attr('transform', 'rotate(-40)')
 			.attr('text-anchor', 'end')
-			.attr('fill', 'orange')
-			.attr('font-size', '14px');
+			.attr('fill', 'white')
+			.attr('font-size', '16px');
 
 		xAxisGroup
 			.select('path')
@@ -118,5 +119,19 @@ export default class BarDisplay {
 		yAxisGroup
 			.selectAll('line')
 			.attr('stroke', 'white');
+
+		// text label for the y axis
+		svg.append("text")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 0 - (this.margin.left + 75))
+			.attr("x", 0 - (this.graphHeight / 2))
+			.attr("dy", "1em")
+			.attr("fill", "white")
+			.attr("font-size", this.fontSize)
+			.attr("letter-spacing", 5)
+			.style("text-anchor", "middle")
+			.text("PRECIPITATION (%)");
+
+
 	}
 }

@@ -24,9 +24,9 @@ svg {
 }
 
 path {
-	animation: drawLine 15s ease-in forwards 0s;
-	stroke-dasharray: 10000;
-	stroke-dashoffset: 10000;
+	/* animation: drawLine 15s ease-in forwards 0s; */
+	/* stroke-dasharray: 10000; */
+	/* stroke-dashoffset: 10000; */
 }
 
 @keyframes drawLine {

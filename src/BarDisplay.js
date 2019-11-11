@@ -4,16 +4,20 @@ import * as d3 from 'd3';
 
 export default class BarDisplay {
 	// ES6 class
-	constructor(dataset) {
+	constructor(height, width, dataset) {
 		// a function that gets called automatically
-		this.width = 1230;
-		this.height = 700;
+		this.w = width;
+		this.h = height;
 		this.padding = 0.2;
 		//create margins and dimensions
-		// this.margin = { top: 20, right: 20, bottom: 100, left: 100 };
-		this.margin = { top: 0, right: 0, bottom: 0, left: 0 };
-		this.graphWidth = 1230 - this.margin.left - this.margin.right;
-		this.graphHeight = 700 - this.margin.top - this.margin.bottom;
+		this.margin = {
+			top: 0,
+			right: 0,
+			bottom: 0,
+			left: 0
+		};
+		this.graphWidth = this.w - this.margin.left - this.margin.right;
+		this.graphHeight = this.h - this.margin.top - this.margin.bottom;
 		this.dataset = dataset;
 		console.log(dataset);
 
@@ -23,8 +27,8 @@ export default class BarDisplay {
 	buildChart() {
 		const svg = d3
 			.select('#barSpace')
-			.attr('width', this.width)
-			.attr('height', this.height);
+			.attr('width', this.w)
+			.attr('height', this.h);
 
 		//grouping
 		const graph = svg
@@ -43,6 +47,7 @@ export default class BarDisplay {
 		console.log(this.dataset);
 		const chartData = this.dataset;
 		const extent = d3.extent(chartData, d => d.precip);
+		// const extent = [-41, 61];
 
 		//linear Scale
 		const y = d3
@@ -106,20 +111,40 @@ export default class BarDisplay {
 		//create and call the axes
 		const xAxis = d3.axisBottom(x);
 		const yAxis = d3
-
 			.axisLeft(y)
 			.ticks(20)
-			.tickFormat(d => d + ' precip');
+			.tickFormat(d => d + '%');
 		// .attr('fill', 'white');
 
 		xAxisGroup.call(xAxis);
-		yAxisGroup.call(yAxis);
-
 		xAxisGroup
 			.selectAll('text')
 			.attr('transform', 'rotate(-40)')
 			.attr('text-anchor', 'end')
-			.attr('fill', 'orange');
+			.attr('fill', 'orange')
+			.attr('font-size', '14px');
+
+		xAxisGroup
+			.select('path')
+			.attr('stroke', 'white');
+
+		xAxisGroup
+			.selectAll('line')
+			.attr('stroke', 'white');
+
+		yAxisGroup.call(yAxis);
+		yAxisGroup
+			.selectAll('text')
+			.attr('fill', 'white')
+			.attr('font-size', '16px');
+
+		yAxisGroup
+			.select('path')
+			.attr('stroke', 'white');
+
+		yAxisGroup
+			.selectAll('line')
+			.attr('stroke', 'white');
 		// });
 	}
 }

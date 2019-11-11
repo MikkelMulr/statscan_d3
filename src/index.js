@@ -3,8 +3,8 @@ import LineDisplay from './LineDisplay';
 import Legend from './legend';
 
 let dataset = [];
-let height = 700;
-let width = 1230;
+let width = 1200;
+let height = 600;
 
 fetch('./data.json')
 	.then(data => data.json())

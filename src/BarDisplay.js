@@ -42,12 +42,9 @@ export default class BarDisplay {
 			.attr('transform', `translate(0,${this.graphHeight})`);
 		const yAxisGroup = graph.append('g');
 
-		// d3.json('data.json').then(data => {
-		// this.dataset.then(data => {
 		console.log(this.dataset);
 		const chartData = this.dataset;
 		const extent = d3.extent(chartData, d => d.precip);
-		// const extent = [-41, 61];
 
 		//linear Scale
 		const y = d3
@@ -58,7 +55,6 @@ export default class BarDisplay {
 		const x = d3
 			.scaleBand()
 			.domain(chartData.map(item => item.year))
-			.range([0, 1600])
 			.range([0, this.graphWidth])
 			.paddingInner(this.padding)
 			.paddingOuter(this.padding);
@@ -85,7 +81,6 @@ export default class BarDisplay {
 		const stop3 = gradient
 			.append('stop')
 			.attr('offset', '100%')
-
 			.attr('stop-color', '#0f0');
 
 		//append the enter selection to the DOM
@@ -96,6 +91,7 @@ export default class BarDisplay {
 			.attr('height', d => Math.abs(y(0) - y(d.precip)))
 			// .attr('fill', 'url(#gradientBar)')
 			.attr('fill', 'salmon')
+			// .attr("fill", d => `rgba(${(d.precip >= 0 ? d.precip : -d.precip) * 7}, 140, 80)`)
 			.attr('stroke-width', 2)
 			.attr('x', d => x(d.year))
 			.attr('y', d => (d.precip >= 0 ? y(d.precip) : y(0)));

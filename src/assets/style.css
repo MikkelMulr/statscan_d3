@@ -10,7 +10,8 @@ body {
 	color: #fff;
 }
 
-h1, h2 {
+h1,
+h2 {
 	width: 50%;
 	padding-top: 10px;
 	overflow: visible;
@@ -26,21 +27,11 @@ svg {
 	top: 120px;
 }
 
-#lineSpace #tempLine {
-	/* animation: drawLine 15s ease-in forwards 5s; */
-	/* stroke-dasharray: 10000; */
-	/* stroke-dashoffset: 10000; */
-}
-
 @keyframes drawLine {
 	to {
 		stroke-dasharray: 10000;
 		stroke-dashoffset: 0;
 	}
-}
-
-#barSpace rect {
-	/* animation: drawRect 5s ease-in-out forwards; */
 }
 
 @keyframes drawRect {

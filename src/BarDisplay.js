@@ -1,5 +1,4 @@
 // JavaScript Document
-
 import * as d3 from 'd3';
 
 export default class BarDisplay {
@@ -16,15 +15,19 @@ export default class BarDisplay {
 			bottom: 0,
 			left: 0
 		};
+		// size params of the graphs
 		this.graphWidth = this.w - this.margin.left - this.margin.right;
 		this.graphHeight = this.h - this.margin.top - this.margin.bottom;
 		this.dataset = dataset;
 		console.log(dataset);
 
+		// Calling the primary function to build the chart
 		this.buildChart();
 	}
 
+	// primary function to build the chart
 	buildChart() {
+		// select element to to add chart to and set the height and width 
 		const svg = d3
 			.select('#barSpace')
 			.attr('width', this.w)
@@ -37,21 +40,24 @@ export default class BarDisplay {
 			.attr('height', this.graphHeight)
 			.attr('transform', `translate(${this.margin.left},${this.margin.top})`);
 
+		// Define x Axis group
 		const xAxisGroup = graph
 			.append('g')
 			.attr('transform', `translate(0,${this.graphHeight})`);
+		// Define y Axis group
 		const yAxisGroup = graph.append('g');
 
-		console.log(this.dataset);
 		const chartData = this.dataset;
 		const extent = d3.extent(chartData, d => d.precip);
 
 		//linear Scale
+		// define y data/ range
 		const y = d3
 			.scaleLinear()
 			.domain(extent)
 			.range([this.graphHeight, 0]);
 
+		// define x data/ range
 		const x = d3
 			.scaleBand()
 			.domain(chartData.map(item => item.year))
@@ -62,26 +68,6 @@ export default class BarDisplay {
 		//join the data to rects
 		const rects = graph.selectAll('rect').data(chartData);
 
-		const defs = svg.append('defs');
-
-		const gradient = defs
-			.append('linearGradient')
-			.attr('id', 'gradientBar')
-			.attr('gradientUnits', 'userSpaceOnUse')
-			.attr('x1', '0%')
-			.attr('y1', '100%')
-			.attr('x2', '0%')
-			.attr('y2', '0%');
-
-		const stop1 = gradient
-			.append('stop')
-			.attr('offset', '0%')
-			.attr('stop-color', '#f00');
-
-		const stop3 = gradient
-			.append('stop')
-			.attr('offset', '100%')
-			.attr('stop-color', '#0f0');
 
 		//append the enter selection to the DOM
 		rects
@@ -89,9 +75,7 @@ export default class BarDisplay {
 			.append('rect')
 			.attr('width', x.bandwidth)
 			.attr('height', d => Math.abs(y(0) - y(d.precip)))
-			// .attr('fill', 'url(#gradientBar)')
 			.attr('fill', 'salmon')
-			// .attr("fill", d => `rgba(${(d.precip >= 0 ? d.precip : -d.precip) * 7}, 140, 80)`)
 			.attr('stroke-width', 2)
 			.attr('x', d => x(d.year))
 			.attr('y', d => (d.precip >= 0 ? y(d.precip) : y(0)));
@@ -102,8 +86,8 @@ export default class BarDisplay {
 			.axisLeft(y)
 			.ticks(20)
 			.tickFormat(d => d + '%');
-		// .attr('fill', 'white');
 
+		// calling the x Axis and setting its display params
 		xAxisGroup.call(xAxis);
 		xAxisGroup
 			.selectAll('text')
@@ -120,6 +104,7 @@ export default class BarDisplay {
 			.selectAll('line')
 			.attr('stroke', 'white');
 
+		// Calling the y Axis and setting its display params
 		yAxisGroup.call(yAxis);
 		yAxisGroup
 			.selectAll('text')
@@ -133,6 +118,5 @@ export default class BarDisplay {
 		yAxisGroup
 			.selectAll('line')
 			.attr('stroke', 'white');
-		// });
 	}
 }

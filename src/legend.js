@@ -6,9 +6,9 @@ export default class Legend {
 		this.height = 200;
 		this.legendTextColor = 'White';
 		this.tempTextColor = 'yellow';
-		this.precipTextColor = 'orange';
+		this.precipTextColor = 'salmon';
 		this.tempRectColor = 'yellow';
-		this.precipRectColor = 'orange';
+		this.precipRectColor = 'salmon';
 		this.buildLegend();
 	}
 	buildLegend() {

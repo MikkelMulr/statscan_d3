@@ -61,8 +61,8 @@ export default class LineDisplay {
 			.line()
 			.x(d => (d.year - 1969.5) * this.w / this.tempData.length)
 			.y(d => this.h / 1.7 - d.temp * 70)
-			// .curve(d3.curveNatural);
-			.curve(d3.curveCatmullRom);
+			.curve(d3.curveLinear);
+			// .curve(d3.curveCatmullRom);
 
 		const yAxisGroup = svg
 			.append('g')
@@ -102,7 +102,8 @@ export default class LineDisplay {
 		let viz = svg
 			.append('path')
 			.attr('d', lineFun(this.tempData))
-			.attr('stroke', 'url(#gradient)')
+			// .attr('stroke', 'url(#gradient)')
+			.attr('stroke', 'yellow')
 			.attr('stroke-width', 10)
 			.attr('fill', 'none')
 			.attr('stroke-linecap', 'round')

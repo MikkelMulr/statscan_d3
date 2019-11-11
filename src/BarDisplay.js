@@ -94,7 +94,8 @@ export default class BarDisplay {
 			.append('rect')
 			.attr('width', x.bandwidth)
 			.attr('height', d => Math.abs(y(0) - y(d.precip)))
-			.attr('fill', 'url(#gradientBar)')
+			// .attr('fill', 'url(#gradientBar)')
+			.attr('fill', 'salmon')
 			.attr('stroke-width', 2)
 			.attr('x', d => x(d.year))
 			.attr('y', d => (d.precip >= 0 ? y(d.precip) : y(0)));

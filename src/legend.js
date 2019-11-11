@@ -13,13 +13,13 @@ export default class Legend {
 		this.precipTextColor = 'salmon';
 		this.tempRectColor = 'yellow';
 		this.precipRectColor = 'salmon';
+		this.fontSize = '17px';
 
 		// function to build the legends
 		this.buildLegend();
 	}
 
 	buildLegend() {
-
 		// adding the svg with specified height and width
 		const svg = d3
 			.select('#legend')
@@ -33,8 +33,8 @@ export default class Legend {
 			.attr('y', 25)
 			.attr('fill', this.legendTextColor)
 			.text('Legend');
-		
-		// adding text and rectangle for the temperature for the 
+
+		// adding text and rectangle for the temperature for the
 		svg
 			.append('rect')
 			.attr('width', 10)
@@ -47,8 +47,9 @@ export default class Legend {
 			.attr('x', 45)
 			.attr('y', 50)
 			.attr('fill', this.tempTextColor)
-			.text('Temperature');
-		
+			.text('Temperature')
+			.attr('font-size', this.fontSize);
+
 		// adding text and rectangle for the precipitation graph
 		svg
 			.append('rect')
@@ -63,6 +64,7 @@ export default class Legend {
 			.attr('x', 45)
 			.attr('y', 70)
 			.attr('fill', this.precipTextColor)
-			.text('Precipitation');
+			.text('Precipitation')
+			.attr('font-size', this.fontSize);
 	}
 }

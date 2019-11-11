@@ -62,6 +62,7 @@ export default class BarDisplay {
 			.range([0, this.graphWidth])
 			.paddingInner(this.padding)
 			.paddingOuter(this.padding);
+
 		//join the data to rects
 		const rects = graph.selectAll('rect').data(chartData);
 
@@ -81,12 +82,6 @@ export default class BarDisplay {
 			.attr('offset', '0%')
 			.attr('stop-color', '#f00');
 
-		// const stop2 = gradient
-		// 	.append('stop')
-		// 	.attr('offset', '35%')
-		// 	// .attr('stop-color', '#86A8E7');
-		// 	.attr('stop-color', '#D16BA5');
-
 		const stop3 = gradient
 			.append('stop')
 			.attr('offset', '100%')
@@ -98,14 +93,10 @@ export default class BarDisplay {
 			.enter()
 			.append('rect')
 			.attr('width', x.bandwidth)
-			// .attr('height', d => graphHeight - y(d.precip))
 			.attr('height', d => Math.abs(y(0) - y(d.precip)))
-			// .attr('fill', 'orange')
 			.attr('fill', 'url(#gradientBar)')
 			.attr('stroke-width', 2)
-			// .attr('stroke', 'black')
 			.attr('x', d => x(d.year))
-			// .attr('y', d => y(d.precip));
 			.attr('y', d => (d.precip >= 0 ? y(d.precip) : y(0)));
 
 		//create and call the axes

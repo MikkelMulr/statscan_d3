@@ -8,6 +8,7 @@ export default class BarDisplay {
 		this.w = width;
 		this.h = height;
 		this.padding = 0.2;
+		this.fontSize = '16px';
 		//create margins and dimensions
 		this.margin = {
 			top: 0,
@@ -27,7 +28,7 @@ export default class BarDisplay {
 
 	// primary function to build the chart
 	buildChart() {
-		// select element to to add chart to and set the height and width 
+		// select element to to add chart to and set the height and width
 		const svg = d3
 			.select('#barSpace')
 			.attr('width', this.w)
@@ -68,7 +69,6 @@ export default class BarDisplay {
 		//join the data to rects
 		const rects = graph.selectAll('rect').data(chartData);
 
-
 		//append the enter selection to the DOM
 		rects
 			.enter()
@@ -93,30 +93,43 @@ export default class BarDisplay {
 			.selectAll('text')
 			.attr('transform', 'rotate(-40)')
 			.attr('text-anchor', 'end')
-			.attr('fill', 'orange')
-			.attr('font-size', '14px');
+			.attr('fill', 'white')
+			.attr('font-size', this.fontSize);
 
 		xAxisGroup
-			.select('path')
-			.attr('stroke', 'white');
+			.append('text')
+			.text('YEARS')
+			.attr('fill', 'white')
+			.attr('transform', 'translate(600,65)')
+			.attr('font-size', this.fontSize)
+			.attr('letter-spacing', 3);
 
-		xAxisGroup
-			.selectAll('line')
-			.attr('stroke', 'white');
+		xAxisGroup.select('path').attr('stroke', 'white');
+
+		xAxisGroup.selectAll('line').attr('stroke', 'white');
 
 		// Calling the y Axis and setting its display params
 		yAxisGroup.call(yAxis);
 		yAxisGroup
 			.selectAll('text')
 			.attr('fill', 'white')
-			.attr('font-size', '16px');
+			.attr('font-size', this.fontSize);
 
-		yAxisGroup
-			.select('path')
-			.attr('stroke', 'white');
+		yAxisGroup.select('path').attr('stroke', 'white');
 
-		yAxisGroup
-			.selectAll('line')
-			.attr('stroke', 'white');
+		yAxisGroup.selectAll('line').attr('stroke', 'white');
+
+
+		// text label for the y axis
+		svg.append("text")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 0 - (this.margin.left + 75))
+			.attr("x", 0 - (this.graphHeight / 2))
+			.attr("dy", "1em")
+			.attr("fill", "white")
+			.attr("font-size", this.fontSize)
+			.attr("letter-spacing", 5)
+			.style("text-anchor", "middle")
+			.text("PRECIPITATION (%)");
 	}
 }

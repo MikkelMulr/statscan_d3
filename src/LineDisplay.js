@@ -6,6 +6,7 @@ export default class LineDisplay {
 		this.h = height;
 		this.w = width;
 		this.tempData = dataset;
+		this.fontSize = '16px';
 
 		// create margins and dimensions
 		this.margin = {
@@ -95,7 +96,16 @@ export default class LineDisplay {
 		yAxisGroup
 			.selectAll('text')
 			.attr('fill', 'white')
-			.attr('font-size', '16px');
+			.attr('font-size', this.fontSize);
+
+		yAxisGroup
+			.append('text')
+			.text('TEMPERATURE (\xB0C)')
+			.attr('fill', 'white')
+			.attr('font-size', this.fontSize)
+			.attr('writing-mode', 'tb')
+			.attr('letter-spacing', 5)
+			.attr('transform', 'translate(90 200)')
 
 		// drawing the axis line
 		yAxisGroup

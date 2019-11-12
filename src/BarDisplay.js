@@ -26,7 +26,7 @@ export default class BarDisplay {
 	}
 
 	// primary function to build the chart
-	buildChart() {
+	buildChart(newData) {
 		// select element to to add chart to and set the height and width
 		const svg = d3
 			.select('#barSpace')
@@ -47,9 +47,14 @@ export default class BarDisplay {
 		// Define y Axis group
 		const yAxisGroup = graph.append('g');
 
-		const chartData = this.dataset;
+		let chartData
+		if (newData)
+			chartData = newData;
+			
+		else
+			chartData = this.dataset;
 		console.log(chartData);
-		
+
 		const extent = d3.extent(chartData, d => d.precip);
 
 		//linear Scale

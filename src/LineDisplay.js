@@ -46,33 +46,6 @@ export default class LineDisplay {
 			.attr('width', this.w)
 			.attr('height', this.h);
 
-		// adding def for defining a gradient to the svg
-		let defs = svg.append('defs');
-
-		// gradient definitions
-		let gradient = defs
-			.append('linearGradient')
-			.attr('id', 'gradient')
-			.attr('x1', '0%')
-			.attr('y1', '100%')
-			.attr('x2', '0%')
-			.attr('y2', '0%');
-
-		let stop1 = gradient
-			.append('stop')
-			.attr('offset', '0%')
-			.attr('stop-color', '#00f');
-
-		let stop2 = gradient
-			.append('stop')
-			.attr('offset', '30%')
-			.attr('stop-color', '#fff');
-
-		let stop3 = gradient
-			.append('stop')
-			.attr('offset', '100%')
-			.attr('stop-color', '#f00');
-
 		// grouping everyting in a group inside the svg
 		const graph = svg
 			.append('g')

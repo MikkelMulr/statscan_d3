@@ -11,12 +11,33 @@ body {
 }
 
 h1,
-h2 {
+h2,
+div {
 	width: 50%;
 	padding-top: 10px;
 	overflow: visible;
 	text-align: center;
 	margin: 0 auto;
+}
+
+div {
+	width: auto;
+}
+
+h2 {
+	display: inline;
+}
+
+select {
+	height: 35px;
+	width: 200px;
+	font-size: 18px;
+	font-weight: bolder;
+	background: #383838;
+	color: #fff;
+	padding: 5px;
+	margin: 10px;
+	border: 1px solid #fff;
 }
 
 svg {

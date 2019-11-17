@@ -11,42 +11,100 @@ import LineDisplay from './LineDisplay';
 import Legend from './legend';
 
 // variables to store the height, width, and dataset for the graph to be drawn
-let dataset = [];
+let climateData = [];
+let graphData = [];
 let width = 1200;
 let height = 600;
+let myBars;
+let myLine;
 let svgs = document.querySelectorAll("svg");
+
+// variable to store dropdown data
+let regionList = [];
+let seasonList = [];
+let regionOptions = "";
+let seasonOptions = "";
+
+let regionSelector = document.querySelector("#regionSelector");
+let seasonSelector = document.querySelector("#seasonSelector");
+
+let selectedRegion = 0;
+let selectedSeason = 0;
 
 // fetching the data from data.json file and parsing it through data.json()
 fetch('./data.json')
 	.then(data => data.json())
 	.then(data => {
 		// assigning the data to dataset array
-		dataset = data.climateData.regions[1].seasons[0].seasonData;
+		climateData = data.climateData;
+		// dataset = data.climateData.regions[1].seasons[0].seasonData;
+		// console.log(climateData);
 
-		console.log(dataset);
-		
-		// creating new instance of bar chart with the specified height, width and imported data
-		let myBars = new BarDisplay(height, width, dataset);
+		// resetting the indexes for the dropdowns
+		seasonSelector.selectedIndex = -1;
+		regionSelector.selectedIndex = -1;
 
-		// creating new instance of line chart with the specified height, width and imported data
-		let myLine = new LineDisplay(height, width, dataset);
+		/* CODE FOR THE DROPDOWNS */
 
-		setTimeout(function () {
-			console.log("FIRED");
-			dataset = data.climateData.regions[0].seasons[0].seasonData;
+		// fetching region data and populating region dropdown
+		regionList = climateData.regions;
+		regionList.forEach(region => {
+			regionOptions += `<option>${region.regionName}</option>`;
+		});
+		regionSelector.innerHTML = regionOptions;
 
-			
+		// fetching season data and populating season dropdown
+		selectedRegion = regionSelector.selectedIndex;
+		seasonList = regionList[selectedRegion].seasons;
+		seasonOptions = "";
+		seasonList.forEach(season => {
+			seasonOptions += `<option>${season.seasonName}</option>`;
+		});
+		seasonSelector.innerHTML = seasonOptions;
+		selectedSeason = seasonSelector.selectedIndex;
+
+		drawGraphs();
+
+		// event listener to change the season dropdown
+		regionSelector.addEventListener("change", () => {
+			selectedRegion = regionSelector.selectedIndex;
+			seasonList = regionList[selectedRegion].seasons;
+			seasonOptions = "";
+			seasonList.forEach(season => {
+				seasonOptions += `<option>${season.seasonName}</option>`;
+			});
+			seasonSelector.innerHTML = seasonOptions;
+			seasonSelector.selectedIndex = 0;
+			selectedSeason = seasonSelector.selectedIndex;
+			drawGraphs();
+		});
+
+		// resetting season index to set it up be fired when an option is selected
+		// necessary cuz if there's only one season fetched, then selected index will be 0 everytime and graph won't changed
+		seasonSelector.addEventListener("focus", () => {
+			seasonSelector.selectedIndex = -1;
+		});
+
+		// resetting the svgs and drawing the graph again with the new data
+		seasonSelector.addEventListener("change", () => {
+			selectedSeason = seasonSelector.selectedIndex;
+			drawGraphs();
+		});
+		/* END --- CODE FOR THE DROPDOWNS */
+
+		function drawGraphs() {
 			svgs.forEach(svg => {
 				svg.innerHTML = "";
 			});
 
-			// myBars = new BarDisplay(height, width, dataset);
-			// myLine = new LineDisplay(height, width, dataset);
+			graphData = seasonList[selectedSeason].seasonData;
 
-			myBars.buildChart(dataset);
-			myLine.buildLineChart()
-		}, 5000);
+			// creating new instance of bar chart with the specified height, width and imported data
+			myBars = new BarDisplay(height, width, graphData);
 
+			// creating new instance of line chart with the specified height, width and imported data
+			myLine = new LineDisplay(height, width, graphData);
+		}
 	});
 
 // creating a new instance of legend

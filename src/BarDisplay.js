@@ -53,7 +53,7 @@ export default class BarDisplay {
 			
 		else
 			chartData = this.dataset;
-		console.log(chartData);
+		// console.log(chartData);
 
 		const extent = d3.extent(chartData, d => d.precip);
 

@@ -2,7 +2,9 @@
  * Authors: Suleman, Usman, Michael
  * Description: Two charts (line and bar) recieving data from an external set of data,
  * one display the precipitation and the other temperature over the span of 40 years.
- * The data is specific to the canadian artctic tundra from the years 1970 - 2010.
+ * The region and the season for the data can be selected using the dropdowns.
+ * 
+ * 
  */
 
 // importing classes for graph and the legend
@@ -17,6 +19,7 @@ let width = 1200;
 let height = 600;
 let myBars;
 let myLine;
+let myLegend;
 let svgs = document.querySelectorAll("svg");
 
 // variable to store dropdown data
@@ -30,6 +33,8 @@ let seasonSelector = document.querySelector("#seasonSelector");
 
 let selectedRegion = 0;
 let selectedSeason = 0;
+
+
 
 // fetching the data from data.json file and parsing it through data.json()
 fetch('./data.json')
@@ -92,6 +97,7 @@ fetch('./data.json')
 		});
 		/* END --- CODE FOR THE DROPDOWNS */
 
+		// function to clear the svg and draw the graph
 		function drawGraphs() {
 			svgs.forEach(svg => {
 				svg.innerHTML = "";
@@ -104,8 +110,8 @@ fetch('./data.json')
 
 			// creating new instance of line chart with the specified height, width and imported data
 			myLine = new LineDisplay(height, width, graphData);
+			
+			// adding legend to the graph
+			myLegend = new Legend();
 		}
 	});
-
-// creating a new instance of legend
-let myLegend = new Legend();
